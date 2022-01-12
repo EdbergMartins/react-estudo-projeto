@@ -1,25 +1,30 @@
 .footer {
-  display: flex; 
-  justify-content: space-between;
-  background-color: rgb(85, 80, 80);
-  padding: 1em;
+  text-align: center;
+  background-color: #222;
+  color: white;
+  padding: 3em;
 }
 
-.list {
+.socail_list {
   display: flex;
-  list-style: none;
-  align-items: center;
+  justify-content: center;
+  list-style-type: none;
 }
 
-.item {
-  margin-right: 1em; 
+.socail_list li {
+  margin: 0 1em;
+  font-size: 1.5em;
 }
 
-.item a {
-  color: #fff;
-  text-decoration: none; /* retirar sublinhado */
+.socail_list li:hover {
+  cursor: pointer;
+  color: #ffbb33;
 }
 
-.item a:hover {
+.copy_right {
+  margin-top: 2em;
+}
+.copy_right span {
+  font-weight: bold;
   color: #ffbb33;
 }

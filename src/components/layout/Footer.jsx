@@ -4,17 +4,22 @@ import styles from "./Footer.module.css";
 
 function Footer() {
   return (
-    <ul className={styles.footer}>
-      <li >
-        <FaFacebook />
-      </li>
-      <li >
-        <FaInstagram />
-      </li>
-      <li >
-        <FaLinkedin />
-      </li>
-    </ul>
+    <footer className={styles.footer}>
+      <ul className={styles.socail_list}>
+        <li>
+          <FaFacebook />
+        </li>
+        <li>
+          <FaInstagram />
+        </li>
+        <li>
+          <FaLinkedin />
+        </li>
+      </ul>
+      <p className={styles.copy_right}>
+        <span>Costs</span> &copy; 2022
+      </p>
+    </footer>
   );
 }
 
