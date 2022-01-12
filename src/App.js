@@ -12,7 +12,7 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Navbar/>
+        <Navbar className="navbar"/>
         <Container customClass="min-height">
           <Routes>
             <Route exact path="/" element={<Home />} />
