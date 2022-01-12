@@ -3,6 +3,7 @@ import Company from "./components/pages/Company";
 import Contact from "./components/pages/Contact";
 import Home from "./components/pages/Home";
 import NewPorject from "./components/pages/NewPorject";
+import Projects from "./components/pages/Projects";
 
 import Container from "./components/layout/Container";
 import Navbar from "./components/layout/Navbar";
@@ -12,13 +13,14 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Navbar className="navbar"/>
+        <Navbar className="navbar" />
         <Container customClass="min-height">
           <Routes>
             <Route exact path="/" element={<Home />} />
             <Route exact path="/company" element={<Company />} />
             <Route exact path="/contact" element={<Contact />} />
             <Route exact path="/newproject" element={<NewPorject />} />
+            <Route exact path="/project" element={<Projects />} />
           </Routes>
         </Container>
         <Footer />

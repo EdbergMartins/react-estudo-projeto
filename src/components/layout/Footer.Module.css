@@ -1,0 +1,25 @@
+.footer {
+  display: flex; 
+  justify-content: space-between;
+  background-color: rgb(85, 80, 80);
+  padding: 1em;
+}
+
+.list {
+  display: flex;
+  list-style: none;
+  align-items: center;
+}
+
+.item {
+  margin-right: 1em; 
+}
+
+.item a {
+  color: #fff;
+  text-decoration: none; /* retirar sublinhado */
+}
+
+.item a:hover {
+  color: #ffbb33;
+}

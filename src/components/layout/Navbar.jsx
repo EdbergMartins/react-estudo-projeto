@@ -20,11 +20,15 @@ function Navbar() {
           </li>
           <li className={styles.item}>
             {" "}
-            <Link to="/contact">Contato</Link>
+            <Link to="/project">Projetos</Link>
           </li>
           <li className={styles.item}>
             {" "}
             <Link to="/company">Empresa</Link>
+          </li>
+          <li className={styles.item}>
+            {" "}
+            <Link to="/contact">Contato</Link>
           </li>
         </ul>
       </Container>

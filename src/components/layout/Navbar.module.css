@@ -1,5 +1,5 @@
 .navbar {
-  display: flex;
+  display: flex; 
   justify-content: space-between;
   background-color: #222;
   padding: 1em;
@@ -12,12 +12,12 @@
 }
 
 .item {
-  margin-right: 1em;
+  margin-right: 1em; 
 }
 
 .item a {
   color: #fff;
-  text-decoration: none;
+  text-decoration: none; /* retirar sublinhado */
 }
 
 .item a:hover {
