@@ -1,9 +1,33 @@
 {
-  "projects": [],
+  "projects": [
+    {
+      "category": {
+        "id": "3",
+        "name": "Design"
+      },
+      "name": "Edberg",
+      "budget": "12312312312",
+      "cost": 0,
+      "services": [],
+      "id": 1
+    }
+  ],
   "categories": [
-    { "id": 1, "name": "Infra" },
-    { "id": 2, "name": "Desenvolvimento" },
-    { "id": 3, "name": "Design" },
-    { "id": 4, "name": "Planejamento" }
+    {
+      "id": 1,
+      "name": "Infra"
+    },
+    {
+      "id": 2,
+      "name": "Desenvolvimento"
+    },
+    {
+      "id": 3,
+      "name": "Design"
+    },
+    {
+      "id": 4,
+      "name": "Planejamento"
+    }
   ]
 }
