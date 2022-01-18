@@ -22,7 +22,7 @@ function NewProject() {
       .then((data) => {
         console.log(data);
         // redirect
-        history("/project", { state: true });
+        history("/project", { state: 'Procejo criado com sucesso' });
       })
       .catch((err) => console.log(err));
   }

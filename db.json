@@ -1,17 +1,5 @@
 {
-  "projects": [
-    {
-      "name": "1231",
-      "budget": "1231",
-      "category": {
-        "id": "2",
-        "name": "Desenvolvimento"
-      },
-      "cost": 0,
-      "services": [],
-      "id": 1
-    }
-  ],
+  "projects": [],
   "categories": [
     {
       "id": 1,

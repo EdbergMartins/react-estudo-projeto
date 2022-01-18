@@ -12,7 +12,7 @@ function Projects() {
   return (
     <div>
       <h1>Meus Projetos</h1>
-      {message && <Message type="sucess" msg="Procejo criado com sucesso" />}
+      {message && <Message type="sucess" msg= {message} />}
     </div>
   );
 }
