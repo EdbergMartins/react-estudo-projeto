@@ -1,17 +1,5 @@
 {
-  "projects": [
-    {
-      "category": {
-        "id": "3",
-        "name": "Design"
-      },
-      "name": "Edberg",
-      "budget": "12312312312",
-      "cost": 0,
-      "services": [],
-      "id": 1
-    }
-  ],
+  "projects": [],
   "categories": [
     {
       "id": 1,

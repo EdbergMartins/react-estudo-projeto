@@ -4,6 +4,7 @@ import styles from "./ProjectForm.module.css";
 import Input from "../form/Input.jsx";
 import Select from "../form/Select";
 import SubmitButton from "../form/SubmitButton";
+import Message from "../layout/Message";
 
 function ProjectForm({ handleSubmit, btnText, projectData }) {
   const [categories, setCategories] = useState([]);
@@ -44,6 +45,7 @@ function ProjectForm({ handleSubmit, btnText, projectData }) {
   }
 
   return (
+
     <form className={styles.form} onSubmit={submit}>
       <Input
         type="text"
