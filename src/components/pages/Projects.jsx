@@ -56,7 +56,7 @@ function Projects() {
       </div>
       {message && <Message type="sucess" msg="Procejo criado com sucesso" />}
       {projectMessage && <Message type="sucess" msg={projectMessage} />}
-      <Container className="start">
+      <Container customClass="start">
         {projects.length > 0 &&
           projects.map((project) => (
             <ProjectCards
