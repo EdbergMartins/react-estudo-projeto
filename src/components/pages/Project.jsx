@@ -3,11 +3,15 @@ import { useParams } from "react-router-dom";
 import styles from "./Project.module.css";
 import Load from "../layout/Load";
 import Container from "../layout/Container";
+import Message from "../layout/Message";
+import ProjectForm from "../project/ProjectForm";
 
 function Project() {
   const { id } = useParams();
   const [project, setProject] = useState([]);
   const [showProjectForm, setShowProjectForm] = useState(false);
+  const [message, setMessage] = useState();
+  const [type, setType] = useState();
 
   useEffect(() => {
     setTimeout(() => {
@@ -29,11 +33,37 @@ function Project() {
     setShowProjectForm(!showProjectForm);
   }
 
+  function editPost(project) {
+    //budget validation
+    if (project.budget < project.cost) {
+      setMessage("O custo do proejto ultrapassou o valor do orçamento!");
+      setType("error");
+      return false;
+    }
+
+    fetch(`http://localhost:5000/projects/${project.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(project),
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        setProject(data);
+        setMessage("Projeto atualizado!");
+        setType("sucess");
+        setShowProjectForm(false);
+      })
+      .catch((err) => console.log(err));
+  }
+
   return (
     <>
       {project.name ? (
         <div className={styles.project_detailes}>
           <Container customClass="column">
+            {message && <Message type={type} msg={message} />}
             <div className={styles.details_container}>
               <h1>Projeto: {project.name}</h1>
               <button className={styles.btn} onClick={toggleProjectForm}>
@@ -53,7 +83,11 @@ function Project() {
                 </div>
               ) : (
                 <div className={styles.project_info}>
-                  <p>Detalhes do Projeto</p>
+                  <ProjectForm
+                    handleSubmit={editPost}
+                    btnText="Concluir"
+                    projectData={project}
+                  />
                 </div>
               )}
             </div>

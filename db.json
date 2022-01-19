@@ -12,11 +12,11 @@
       "id": 2
     },
     {
-      "name": "Primeiro Projeto",
-      "budget": "1000",
+      "name": "att",
+      "budget": "2",
       "category": {
-        "id": "1",
-        "name": "Infra"
+        "id": "3",
+        "name": "Design"
       },
       "cost": 0,
       "services": [],
