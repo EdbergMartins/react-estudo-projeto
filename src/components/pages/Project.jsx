@@ -1,3 +1,5 @@
+import { parse, v4 as uuidv4 } from "uuid";
+
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styles from "./Project.module.css";
@@ -5,6 +7,7 @@ import Load from "../layout/Load";
 import Container from "../layout/Container";
 import Message from "../layout/Message";
 import ProjectForm from "../project/ProjectForm";
+import ServiceFrom from "../service/ServiceFrom";
 
 function Project() {
   const { id } = useParams();
@@ -64,6 +67,42 @@ function Project() {
       .catch((err) => console.log(err));
   }
 
+  function createService(project) {
+    setMessage("");
+    // last service
+    const lastService = project.services[project.services.length - 1];
+
+    lastService.id = uuidv4();
+
+    const lastServiceCost = lastService.cost;
+
+    const newCost = parseFloat(project.cost) + parseFloat(lastServiceCost);
+
+    // maximum value validation
+    if (newCost > parseFloat(project.budget)) {
+      setMessage("Orçamento ultrapassado, verifique o valor do serviço!");
+      setType("error");
+      project.services.pop();
+      return false;
+    }
+
+    //adicionando o custo do serviço
+    project.cost = newCost;
+
+    //atulizando projeto
+    fetch(`http://localhost:5000/projects/${project.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(project),
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        console.log(data);
+      });
+  }
+
   return (
     <>
       {project.name ? (
@@ -104,7 +143,13 @@ function Project() {
                   {!showServiceForm ? "Adicionar Serviço" : "Fechar"}
                 </button>
                 <div className={styles.project_info}>
-                  {showServiceForm && <div>Formulario do Serviço</div>}
+                  {showServiceForm && (
+                    <ServiceFrom
+                      handleSubmit={createService}
+                      btnText="Adicionar Serviço"
+                      projectData={project}
+                    />
+                  )}
                 </div>
               </div>
             </div>

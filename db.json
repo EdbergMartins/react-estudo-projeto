@@ -18,8 +18,21 @@
         "id": "3",
         "name": "Design"
       },
-      "cost": 0,
-      "services": [],
+      "cost": 2,
+      "services": [
+        {
+          "name": "IHUR",
+          "cost": "1",
+          "description": "11",
+          "id": "247e5993-6dd1-4b26-916e-098cdbaaea0c"
+        },
+        {
+          "name": "IHUR",
+          "cost": "1",
+          "description": "11",
+          "id": "247e5993-6dd1-4b26-916e-098cdbaaea0c"
+        }
+      ],
       "id": 3
     }
   ],
