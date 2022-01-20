@@ -8,10 +8,12 @@ import Container from "../layout/Container";
 import Message from "../layout/Message";
 import ProjectForm from "../project/ProjectForm";
 import ServiceFrom from "../service/ServiceFrom";
+import ServiceCard from "../service/ServiceCard";
 
 function Project() {
   const { id } = useParams();
   const [project, setProject] = useState([]);
+  const [services, setServices] = useState([]);
   const [showProjectForm, setShowProjectForm] = useState(false);
   const [message, setMessage] = useState();
   const [type, setType] = useState();
@@ -28,9 +30,10 @@ function Project() {
         .then((resp) => resp.json())
         .then((data) => {
           setProject(data);
+          setServices(data.services);
         })
         .catch((err) => console.log(err));
-    }, 2000);
+    }, 300);
   }, [id]);
 
   function toggleProjectForm() {
@@ -68,7 +71,7 @@ function Project() {
   }
 
   function createService(project) {
-    setMessage("");
+    setMessage(false);
     // last service
     const lastService = project.services[project.services.length - 1];
 
@@ -98,10 +101,11 @@ function Project() {
       body: JSON.stringify(project),
     })
       .then((resp) => resp.json())
-      .then((data) => {
-        console.log(data);
-      });
+      .then((data) => {})
+      .catch((err) => console.log(err));
   }
+
+  function removeService() {}
 
   return (
     <>
@@ -155,7 +159,18 @@ function Project() {
             </div>
             <h2>Serviços</h2>
             <Container customClass="start">
-              <p>Itens de Serviços</p>
+              {services.length > 0 &&
+                services.map((service) => (
+                  <ServiceCard
+                    id={service.id}
+                    name={service.name}
+                    cost={service.cost}
+                    description={service.description}
+                    key={service.id}
+                    handleRemove={removeService}
+                  />
+                ))}
+              {services.length === 0 && <p>Não há serviços cadastrados.</p>}
             </Container>
           </Container>
         </div>

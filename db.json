@@ -1,39 +1,34 @@
 {
   "projects": [
     {
-      "name": "13",
-      "budget": "222",
+      "name": "1",
+      "budget": "222222",
       "category": {
-        "id": "2",
-        "name": "Desenvolvimento"
+        "id": "1",
+        "name": "Infra"
       },
-      "cost": 0,
-      "services": [],
-      "id": 2
-    },
-    {
-      "name": "att",
-      "budget": "2",
-      "category": {
-        "id": "3",
-        "name": "Design"
-      },
-      "cost": 2,
+      "cost": 226,
       "services": [
         {
-          "name": "IHUR",
-          "cost": "1",
-          "description": "11",
-          "id": "247e5993-6dd1-4b26-916e-098cdbaaea0c"
+          "name": "1",
+          "cost": "222",
+          "description": "3",
+          "id": "cbf758ed-1ca9-404e-8ce6-6186dfac4b83"
         },
         {
-          "name": "IHUR",
-          "cost": "1",
-          "description": "11",
-          "id": "247e5993-6dd1-4b26-916e-098cdbaaea0c"
+          "name": "1",
+          "cost": "2",
+          "description": "3",
+          "id": "1b756c0a-edbb-4773-b966-6d28eeaeba1a"
+        },
+        {
+          "name": "1",
+          "cost": "2",
+          "description": "3",
+          "id": "1b756c0a-edbb-4773-b966-6d28eeaeba1a"
         }
       ],
-      "id": 3
+      "id": 1
     }
   ],
   "categories": [
