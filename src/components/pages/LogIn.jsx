@@ -1,12 +1,37 @@
 import { useState } from 'react';
 import Input from "../form/Input";
-import LinkButton from "../layout/LinkButton";
+import LoadingButton from '../layout/LoadingButton';
+import axios from '../layout/axiosConfig';
 import styles from "./Home.module.css";
 
 function Login() {
   const [emailValue, setEmailValue] = useState('')
   const [passwordValue, setPasswordValue] = useState('')
   const [loginViwer, setLoginViwer] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [requstBody, setRequestBody] = useState({})
+
+  const handleLogin = async () => {
+    setRequestBody({ 'email': emailValue, 'password': passwordValue })
+    setLoading(true);
+    axios.post('/login', requstBody)
+      .then(response => {
+        localStorage.setItem('user', JSON.stringify(response.data))
+        console.log(JSON.parse(localStorage.getItem('user')));
+      })
+      .catch(error => {
+        console.error('Erro na solicitação:', error);
+      })
+      .finally(() =>
+        setLoading(false)
+      )
+      ;
+
+  }
+
+  const handleSingUp = () => {
+    setLoading(!loading)
+  }
 
   const handleChangeEmail = (e) => {
     setEmailValue(e.target.value)
@@ -43,7 +68,7 @@ function Login() {
               placeholder="Password"
               handleOnChange={handleChangePassword}
               value={passwordValue} />
-            <LinkButton to="/newproject" text="Novo Projeto" />
+            <LoadingButton handleClick={handleLogin} loading={loading} text="Entrar" />
             <span
               onClick={handleChangeCreateAccount}
             >Criar Conta</span>
@@ -68,7 +93,7 @@ function Login() {
               handleOnChange={handleChangePassword}
               value={passwordValue} />
 
-            <LinkButton to="/newproject" text="Criar Conta" />
+            <LoadingButton handleClick={handleSingUp} loading={loading} text="Criar Conta" />
             <span
               onClick={handleChangeCreateAccount}
             >Ir para login</span>
