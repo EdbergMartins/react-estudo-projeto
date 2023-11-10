@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom"; //permite fazer redirects nas paginas
 
-import styles from "./NewProject.module.css";
 import ProjectForm from "../project/ProjectForm";
+import styles from "./NewProject.module.css";
 
 function NewProject() {
   const history = useNavigate();
@@ -10,6 +10,7 @@ function NewProject() {
     // initialize cost and services
     project.cost = 0;
     project.services = [];
+    console.log(project)
 
     fetch("http://localhost:5000/projects", {
       method: "POST",

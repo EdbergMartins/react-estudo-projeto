@@ -13,6 +13,7 @@
   padding: 0.7em;
   border-radius: 0;
   border: none;
+    border-radius: 5px;
 }
 
 .form_control input::placeholder {
