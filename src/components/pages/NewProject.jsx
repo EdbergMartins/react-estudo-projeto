@@ -10,7 +10,6 @@ function NewProject() {
     // initialize cost and services
     project.cost = 0;
     project.services = [];
-    console.log(project)
 
     fetch("http://localhost:5000/projects", {
       method: "POST",
@@ -21,7 +20,6 @@ function NewProject() {
     })
       .then((resp) => resp.json())
       .then((data) => {
-        console.log(data);
         // redirect
         history("/project", { state: 'Procejo criado com sucesso' });
       })

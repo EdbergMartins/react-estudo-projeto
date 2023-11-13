@@ -4,7 +4,6 @@ import styles from "./Message.module.css";
 
 function Message({ type, msg }) {
   const [visible, setVisible] = useState(false);
-
   useEffect(() => {
     if (!msg) {
       setVisible(false);
@@ -12,7 +11,6 @@ function Message({ type, msg }) {
     }
 
     setVisible(true);
-
     const timer = setTimeout(() => {
       setVisible(false);
     }, 3000);

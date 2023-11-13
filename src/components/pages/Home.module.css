@@ -36,3 +36,29 @@
   cursor: pointer;
   transition: 0.5s;
 }
+.form_login {
+  display: flex;
+  flex-direction: column
+}
+
+.form_login input {
+  margin-bottom: 10px;
+  padding: 0.7em;
+  border-radius: 0;
+  border: none;
+  border-radius: 5px;
+}
+
+.form_login button {
+  background-color: #222;
+  color: #fff;
+  padding: 0.5em 1em;
+  text-decoration: none;
+  transition: 0.5s;
+  border-radius: 5px;
+}
+
+.form_login button:hover {
+  color: #ffbb33;
+  cursor: pointer;
+}

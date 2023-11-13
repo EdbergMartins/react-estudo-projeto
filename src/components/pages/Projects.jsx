@@ -9,7 +9,6 @@ function Projects() {
     
     message = location.state;
   }
-  console.log({ location });
 
   return (
     <div>
