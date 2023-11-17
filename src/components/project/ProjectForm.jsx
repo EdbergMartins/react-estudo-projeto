@@ -4,28 +4,21 @@ import styles from "./ProjectForm.module.css";
 import Input from "../form/Input.jsx";
 import Select from "../form/Select";
 import SubmitButton from "../form/SubmitButton";
+import { useDispatch, useSelector } from 'react-redux';
 
 function ProjectForm({ handleSubmit, btnText, projectData }) {
-  const [categories, setCategories] = useState([]);
   const [project, setProject] = useState(projectData || {});
+  const [disabled, setDisabled] = useState(false)
 
-  useEffect(() => {
-    fetch("http://localhost:5000/categories", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((resp) => resp.json())
-      .then((data) => {
-        setCategories(data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  const dispatch = useDispatch()
+  const user = useSelector((state: RootState) => state);
+
 
   const submit = (e) => {
     e.preventDefault();
-    handleSubmit(project);
+    const projectWithId = { ...project, idUser: user.id };
+    handleSubmit(projectWithId);
+    setProject({})
   };
 
   function handleChange(e) {
@@ -41,6 +34,18 @@ function ProjectForm({ handleSubmit, btnText, projectData }) {
       },
     });
   }
+  useEffect(() => {
+    if (
+      project &&
+      (project.name === undefined || project.name.length === 0) ||
+      (project.budget === undefined || project.budget <= 0) ||
+      (project.category === undefined || project.category.length === 0)
+    ) {
+      setDisabled(true);
+    } else {
+      setDisabled(false);
+    }
+  }, [project]);
 
   return (
     <form className={styles.form} onSubmit={submit}>
@@ -62,14 +67,14 @@ function ProjectForm({ handleSubmit, btnText, projectData }) {
           value={project.budget ? project.budget : ""}
         />
       </div>
-      <Select
-        name="category_id"
-        text="Selecione a categoria"
-        options={categories}
-        handleOnChange={handleCategory}
-        value={project.category ? project.category.id : ""}
+      <Input
+        name="category"
+        text="Categoria do projeto"
+        placeholder="Insira a categoria do projeto"
+        handleOnChange={handleChange}
+        value={project.category ? project.category : ""}
       />
-      <SubmitButton text={btnText} />
+      <SubmitButton disabled={disabled} text={btnText} />
     </form>
   );
 }

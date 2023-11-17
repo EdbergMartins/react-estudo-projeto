@@ -1,0 +1,21 @@
+.cardDiv {
+  background-color: white;
+  text-decoration: none;
+  border: 5px solid black;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.cardDiv:hover {
+  cursor: pointer;
+  background-color: #dab05e;
+}
+
+.cardDiv:active {
+  background-color: rgba(0, 0, 0, 0.2);
+  top: 2px;
+  left: 2px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  z-index: -1;
+}

@@ -1,37 +1,44 @@
-import { useNavigate } from "react-router-dom"; //permite fazer redirects nas paginas
+import { useNavigate } from "react-router-dom";
+import axios from '../layout/axiosConfig';
 
 import ProjectForm from "../project/ProjectForm";
 import styles from "./NewProject.module.css";
+import { useState } from 'react';
+import Message from '../layout/Message';
 
 function NewProject() {
   const history = useNavigate();
+  const [loading, setLoading] = useState(false)
+  const [type, setType] = useState('')
+  const [message, setMessage] = useState('')
 
   function createPost(project) {
-    // initialize cost and services
-    project.cost = 0;
-    project.services = [];
 
-    fetch("http://localhost:5000/projects", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(project),
-    })
-      .then((resp) => resp.json())
-      .then((data) => {
-        // redirect
-        history("/project", { state: 'Procejo criado com sucesso' });
+    axios.post('/project', project)
+      .then(response => {
+        setType('sucess')
+        setMessage('Projecto criado com sucesso.')
       })
-      .catch((err) => console.log(err));
+      .catch(error => {
+        console.error('Erro na solicitação:', error);
+        setType('error')
+        setMessage('Erro ao executar a ação.')
+      })
+      .finally(() =>
+        setLoading(false)
+      )
+      ;
   }
 
   return (
+    <>
     <div className={styles.newproject_container}>
       <h1>Criar Projeto</h1>
       <p>Crie seu projeto para depois adicionar os seviços</p>
       <ProjectForm handleSubmit={createPost} btnText="Criar Projeto" />
     </div>
+      {message ? <Message type={type} msg={message} /> : <></>}
+    </>
   );
 }
 
