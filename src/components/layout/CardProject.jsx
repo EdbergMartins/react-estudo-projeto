@@ -28,7 +28,7 @@ export const CardProject = (project) => {
         <p>Budget: {budget}</p>
         <p>Category: {category}</p>
       </div>
-      {openModal && <ModalProject isOpen={openModal} onClose={closeModal} />}
+      {openModal && <ModalProject project={project} isOpen={openModal} onClose={closeModal} />}
     </>
   )
 }
