@@ -1,14 +1,3 @@
-/* ModalProject.module.css */
-
-.overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-}
 
 .darken {
   position: fixed;
@@ -17,6 +6,39 @@
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
+}
+
+.modalSecondary {
+  background: #fff;
+  border-radius: 5px;
+  width: 200px;
+  height: 170px;
+  position: absolute;
+  top: 40%;
+  left: 40%;
+  z-index: 1;
+  padding: 10px;
+}
+
+.modalSecondary h4 {
+  text-align: center
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.form input {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+  padding: 0.7em;
+    border-radius: 0;
+    border: none;
+    border-radius: 5px;
+    border: 1px solid black;
 }
 
 .modal {

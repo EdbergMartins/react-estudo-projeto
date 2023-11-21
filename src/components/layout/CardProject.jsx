@@ -25,7 +25,7 @@ export const CardProject = (project) => {
     <>
       <div onClick={() => setOpenModal(true)} className={styles.cardDiv}>
         <h2>{name}</h2>
-        <p>Budget: {budget}</p>
+        <p>Budget: R${budget}</p>
         <p>Category: {category}</p>
       </div>
       {openModal && <ModalProject project={project} isOpen={openModal} onClose={closeModal} />}
