@@ -1,9 +1,10 @@
+import { hover } from '@testing-library/user-event/dist/hover';
 import styles from "./LoadingButton.module.css";
 
-function LoadingButton({ handleClick, loading, text, disabled }) {
+function LoadingButton({ isActived, handleClick, loading, text, disabled }) {
   return (
     <>
-      <button type='button' disabled={disabled} onClick={handleClick} className={styles.btn}>
+      <button style={isActived ? { color: '#ffbb33' } : {}} type='button' disabled={disabled} onClick={handleClick} className={styles.btn}>
         {loading ? <div className={styles['c-loader']}></div> : text}
       </button>
     </>

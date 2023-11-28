@@ -3,6 +3,9 @@ import style from './ModalProject.module.css';
 import LinkButton from './LinkButton';
 import LoadingButton from './LoadingButton';
 import Input from '../form/Input'
+import axios from '../layout/axiosConfig'
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import Paper from '@mui/material/Paper';
 
 export const ModalProject = ({ project, isOpen, onClose }) => {
   const modalRef = useRef(null);
@@ -12,6 +15,9 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
   const [modifyModal, setModifyModal] = useState(false)
   const [valorChanger, setValorChanger] = useState()
   const [typeOfAdd, setTypeOfAdd] = useState('')
+  const [debits, setDebits] = useState()
+  const [credits, setCredits] = useState()
+  const [isActived, setIsActived] = useState(false)
 
   const handleClick = (type) => {
     if (type === 1) {
@@ -20,6 +26,11 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
       setTypeOfAdd('Gasto')
     }
     setModifyModal(true)
+  }
+
+  const onCloseModifyModal = () => {
+    setModifyModal(false)
+    setValorChanger('')
   }
 
   const handleAdd = () => {
@@ -44,6 +55,24 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
   }, [isOpen, onClose]);
 
   useEffect(() => {
+    axios.get('/transactions', { params: { "id": project.project.id } })
+      .then(response => {
+        setDebits(Object.values(response.data.returnDebits))
+        setCredits(Object.values(response.data.returnCredits))
+
+      })
+      .catch(error => {
+        console.error('Erro na solicitação:', error);
+        setType('error')
+        setMessage('Erro ao executar a ação.')
+      })
+      .finally(() =>
+        console.log('fim')
+        // setLoading(false)
+      )
+      ;
+  }, [])
+  useEffect(() => {
     const handleOutsideClick = (event) => {
       if (secondModalRef) {
         if (modalRef.current && !modalRef.current.contains(event.target) && !secondModalRef.current && !secondModalRef.current.contains(event.target)) {
@@ -67,12 +96,17 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
     };
   }, [isOpen, onClose]);
 
+  console.log(isActived)
+
+  console.log(debits)
+  console.log(credits)
+
   return (
     <div>
       {modifyModal &&
         <div style={{ zIndex: 1 }} className={style.darken}>
           <div ref={secondModalRef} className={style.modalSecondary}>
-            <span className={style.closeBtn} onClick={() => setModifyModal(false)}>&times;</span>
+            <span className={style.closeBtn} onClick={() => onCloseModifyModal()}>&times;</span>
             <h4> Adicionar {typeOfAdd} </h4>
             <form onSubmit={(e) => console.log(e)}>
               <dvi className={style.form}>
@@ -111,17 +145,72 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
           </div>
           <div className={style.modalTable}>
             <div className={style.celModalTable}>
-              <h4>Despesas</h4>
-              <span>1</span>
+              <LoadingButton isActived={isActived} handleClick={() => setIsActived(true)} text='Despesas' />
+              <LoadingButton isActived={!isActived} handleClick={() => setIsActived(false)} text='Receitas' />
             </div>
-            <div className={style.celModalTable}>
-              <h4>Receitas</h4>
-              <span>1</span>
+
+
+            {/* {debits && credits ?
+                <TableContainer>
+                  <Table >
+                    <TableHead sx={{ border: 1, borderRadius: " 5px" }}>
+                      <TableRow>
+                        <TableCell align="center">Valor(R$)</TableCell>
+                        <TableCell align="center">Data</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {debits.map((row) => (
+                        row.id &&
+                        <TableRow
+                          key={row.id}
+                        >
+                          <TableCell align="center" component="th" scope="row">
+                            {row.value}
+                          </TableCell>
+                          <TableCell align="right">{row.data_transaction}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+
+                :
+
+                "nada"}
             </div>
-            <div className={style.celModalTable}>
-              <h4>Data</h4>
-              <span>1</span>
-            </div>
+            <div >
+
+              {debits && credits ?
+                <TableContainer>
+                  <Table >
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Valor</TableCell>
+                        <TableCell align="center">Data</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {credits.map((row) => (
+                        row.id &&
+                        <TableRow
+                          key={row.id}
+
+                        >
+                          <TableCell component="th" scope="row">
+                            {row.value}
+                          </TableCell>
+                          <TableCell align="right">{row.data_transaction}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+
+                :
+
+                "nada"} */}
+
           </div>
         </div>
       </div>
