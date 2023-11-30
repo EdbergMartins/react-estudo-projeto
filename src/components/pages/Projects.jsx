@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import axios from '../layout/axiosConfig'
 import { useSelector } from 'react-redux';
 import { CardProject } from '../layout/CardProject';
+import style from './Projects.module.css'
 
 
 function Projects() {
@@ -34,11 +35,15 @@ function Projects() {
 
 
   return (
-    <div>
+    <div className={style.main_container} >
+      <div className={style.title_container}>
       <h1>Meus Projetos</h1>
+      </div>
+      <div className={style.card_container}>
       {projects && projects.map((project) =>
         <CardProject project={project} />
       )}
+    </div>
     </div>
   );
 }

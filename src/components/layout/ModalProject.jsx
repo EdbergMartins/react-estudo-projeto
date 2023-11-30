@@ -14,10 +14,15 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
   const { name, budget, category } = project.project
   const [modifyModal, setModifyModal] = useState(false)
   const [valorChanger, setValorChanger] = useState()
+  const [valueDescription, setValueDescription] = useState()
   const [typeOfAdd, setTypeOfAdd] = useState('')
   const [debits, setDebits] = useState()
   const [credits, setCredits] = useState()
-  const [isActived, setIsActived] = useState(false)
+  const [isActived, setIsActived] = useState(true)
+  const [totalBudget, setTotalBudget] = useState(0)
+  const [type, setType] = useState('')
+  const [message, setMessage] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const handleClick = (type) => {
     if (type === 1) {
@@ -33,8 +38,32 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
     setValorChanger('')
   }
 
-  const handleAdd = () => {
-    console.log(valorChanger)
+  const handleAdd = (value, description) => {
+    axios.post(`/transaction/${typeOfAdd === "Receita" ? "credit" : "debit"}`, { params: { "idProject": project.project.id, "value": valorChanger, "description": valueDescription } })
+      .then(response => {
+        console.log(response)
+        if (typeOfAdd === "Receita") {
+          credits.unshift(response.data[0])
+          const value = credits[credits.length - 1]
+          const responseValue = parseFloat(response.data[0].value)
+          credits[credits.length - 1] = value + responseValue
+        } else {
+          debits.unshift(response.data[0])
+          const value = debits[debits.length - 1]
+          const responseValue = parseFloat(response.data[0].value)
+          debits[debits.length - 1] = value + responseValue
+        }
+        setTotalBudget(credits[credits.length - 1] - debits[debits.length - 1])
+      })
+      .catch(error => {
+        console.error('Erro na solicitação:', error);
+        setType('error')
+        setMessage('Erro ao executar a ação.')
+      })
+      .finally(() =>
+
+        setLoading(false)
+      )
   }
 
   useEffect(() => {
@@ -54,12 +83,16 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
     };
   }, [isOpen, onClose]);
 
+
   useEffect(() => {
     axios.get('/transactions', { params: { "id": project.project.id } })
       .then(response => {
-        setDebits(Object.values(response.data.returnDebits))
-        setCredits(Object.values(response.data.returnCredits))
-
+        const returnCredits = Object.values(response.data.returnCredits)
+        const returnDebits = Object.values(response.data.returnDebits)
+        const total = response.data.returnCredits.totalCredits - response.data.returnDebits.totalDebits
+        setDebits(returnDebits)
+        setCredits(returnCredits)
+        setTotalBudget(total)
       })
       .catch(error => {
         console.error('Erro na solicitação:', error);
@@ -67,11 +100,11 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
         setMessage('Erro ao executar a ação.')
       })
       .finally(() =>
-        console.log('fim')
-        // setLoading(false)
+
+        setLoading(false)
       )
-      ;
-  }, [])
+  }, []);
+
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (secondModalRef) {
@@ -96,10 +129,6 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
     };
   }, [isOpen, onClose]);
 
-  console.log(isActived)
-
-  console.log(debits)
-  console.log(credits)
 
   return (
     <div>
@@ -122,9 +151,19 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
                     title="Por favor, insira apenas numeros positivos."
                     required
                   />
+                  <input
+                    onChange={(e) => setValueDescription(e.target.value)}
+                    placeholder='Desrição'
+                    type="text"
+                    id="descricao"
+                    name="descricao"
+                    value={valueDescription}
+                    title="."
+                    required
+                  />
 
                 </div>
-                <LoadingButton handleClick={handleAdd} text='Adicionar' />
+                <LoadingButton handleClick={() => handleAdd()} text='Adicionar' />
               </dvi>
             </form>
           </div>
@@ -137,9 +176,9 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
           <div className={style.displayModal}>
             <span className={style.closeBtn} onClick={onClose}>&times;</span>
             <h2>{name}</h2>
-            <h3>Valor Inicial: {budget}</h3>
-            <h3>Valor Atual: {budget}</h3>
-            <h3>Category: {category}</h3>
+            <h3>Valor Inicial: {budget && budget.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</h3>
+            <h3 style={{ color: (budget + totalBudget) <= 0 && "red" }}>Valor Atual: {budget && (budget + totalBudget).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</h3>
+            <h3>Categoria: {category}</h3>
             <LoadingButton handleClick={() => handleClick(1)} text='Adicionar Receita' />
             <LoadingButton handleClick={() => handleClick(2)} text='Adicionar Gasto' />
           </div>
@@ -149,18 +188,18 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
               <LoadingButton isActived={!isActived} handleClick={() => setIsActived(false)} text='Receitas' />
             </div>
 
-
-            {/* {debits && credits ?
+            {isActived && debits ?
                 <TableContainer>
                   <Table >
-                    <TableHead sx={{ border: 1, borderRadius: " 5px" }}>
+                  <TableHead >
                       <TableRow>
-                        <TableCell align="center">Valor(R$)</TableCell>
+                      <TableCell align="center">Valor(R$)</TableCell>
+                      <TableCell align="center">Descrição</TableCell>
                         <TableCell align="center">Data</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {debits.map((row) => (
+                    {debits.map((row) => (
                         row.id &&
                         <TableRow
                           key={row.id}
@@ -168,25 +207,25 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
                           <TableCell align="center" component="th" scope="row">
                             {row.value}
                           </TableCell>
-                          <TableCell align="right">{row.data_transaction}</TableCell>
+                          <TableCell align="center" component="th" scope="row">
+                            {row.description}
+                          </TableCell>
+                          <TableCell align="center">
+                            {row.data_transaction}
+                          </TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
                   </Table>
-                </TableContainer>
-
+              </TableContainer>
                 :
-
-                "nada"}
-            </div>
-            <div >
-
-              {debits && credits ?
-                <TableContainer>
+              !isActived && credits ?
+                < TableContainer >
                   <Table >
                     <TableHead>
                       <TableRow>
-                        <TableCell>Valor</TableCell>
+                        <TableCell align="center">Valor(R$)</TableCell>
+                        <TableCell align="center">Descrição</TableCell>
                         <TableCell align="center">Data</TableCell>
                       </TableRow>
                     </TableHead>
@@ -197,20 +236,21 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
                           key={row.id}
 
                         >
-                          <TableCell component="th" scope="row">
+                            <TableCell align="center" component="th" scope="row">
                             {row.value}
-                          </TableCell>
-                          <TableCell align="right">{row.data_transaction}</TableCell>
+                            </TableCell>
+                            <TableCell align="center" component="th" scope="row">
+                              {row.description}
+                            </TableCell>
+                            <TableCell align="center">{row.data_transaction}</TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
                   </Table>
                 </TableContainer>
-
                 :
-
-                "nada"} */}
-
+                "Nenhum dado informado"
+            }
           </div>
         </div>
       </div>
