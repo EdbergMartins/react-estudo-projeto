@@ -27,4 +27,6 @@ function Message({ type, msg }) {
   )
 }
 
+
+
 export default Message;

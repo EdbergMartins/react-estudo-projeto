@@ -1,20 +1,31 @@
 import { useNavigate } from "react-router-dom";
-import axios from '../layout/axiosConfig';
+import axios from 'axios';
 
 import ProjectForm from "../project/ProjectForm";
 import styles from "./NewProject.module.css";
 import { useState } from 'react';
 import Message from '../layout/Message';
+import { useSelector } from 'react-redux';
 
 function NewProject() {
   const history = useNavigate();
   const [loading, setLoading] = useState(false)
   const [type, setType] = useState('')
   const [message, setMessage] = useState('')
+  const token = useSelector((state: RootState) => state.token);
 
   function createPost(project) {
 
-    axios.post('/project', project)
+    axios.post(`${process.env.REACT_APP_API_URL}/project`,
+      project,
+      {
+        headers: token ? {
+          'Content-Type': 'application/json',
+          'Authorization': `${token}`,
+        } : {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(response => {
         setType('sucess')
         setMessage('Projecto criado com sucesso.')

@@ -9,10 +9,9 @@ import App from './App';
 import './index.css';
 import authReducer from './redux/authReducer';
 
-// Configuração do persistor
 const persistConfig = {
-  key: 'root', // a chave do localStorage
-  storage, // o armazenamento a ser usado
+  key: 'root', 
+  storage,
 };
 
 const persistedReducer = persistReducer(persistConfig, authReducer);

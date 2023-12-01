@@ -1,15 +1,13 @@
 import axios from 'axios';
 
-const token = localStorage.getItem('token');
-
 const instance = axios.create({
-  baseURL: 'http://localhost:3333',
-  headers: token ? {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`,
-  } : {
-    'Content-Type': 'application/json',
-  },
+  baseURL: process.env.REACT_APP_API_URL,
+  // headers: token ? {
+  //   'Content-Type': 'application/json',
+  //   'Authorization': `${token}`,
+  // } : {
+  //   'Content-Type': 'application/json',
+  // },
 });
 
 export default instance;

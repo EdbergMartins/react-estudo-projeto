@@ -3,9 +3,10 @@ import style from './ModalProject.module.css';
 import LinkButton from './LinkButton';
 import LoadingButton from './LoadingButton';
 import Input from '../form/Input'
-import axios from '../layout/axiosConfig'
+import axios from 'axios'
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import Paper from '@mui/material/Paper';
+import { useSelector } from 'react-redux';
 
 export const ModalProject = ({ project, isOpen, onClose }) => {
   const modalRef = useRef(null);
@@ -23,6 +24,7 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
   const [type, setType] = useState('')
   const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(false)
+  const token = useSelector((state: RootState) => state.token);
 
   const handleClick = (type) => {
     if (type === 1) {
@@ -41,9 +43,14 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
 
   const handleAdd = (value, description) => {
     setLoading(true)
-    axios.post(`/transaction/${typeOfAdd === "Receita" ? "credit" : "debit"}`, { params: { "idProject": project.project.id, "value": valorChanger, "description": valueDescription } })
-      .then(response => {
-        console.log(response)
+    axios.post(`${process.env.REACT_APP_API_URL}/transaction/${typeOfAdd === "Receita" ? "credit" : "debit"}`,
+      {
+        params: { "idProject": project.project.id, "value": valorChanger, "description": valueDescription },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${token}`,
+        }
+      }).then(response => {
         if (typeOfAdd === "Receita") {
           credits.unshift(response.data[0])
           const value = credits[credits.length - 1]
@@ -91,7 +98,14 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
 
 
   useEffect(() => {
-    axios.get('/transactions', { params: { "id": project.project.id } })
+    axios.get(`${process.env.REACT_APP_API_URL}/transactions`,
+      {
+        params: { "id": project.project.id },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token,
+        }
+      })
       .then(response => {
         const returnCredits = Object.values(response.data.returnCredits)
         const returnDebits = Object.values(response.data.returnDebits)
@@ -134,7 +148,6 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
       document.removeEventListener('mousedown', handleOutsideClick);
     };
   }, [isOpen, onClose]);
-  console.log(isOpen)
 
   return (
     <div>

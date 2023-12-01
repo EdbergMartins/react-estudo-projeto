@@ -7,7 +7,6 @@ export const CardProject = (project) => {
 
 
   const [openModal, setOpenModal] = useState(false)
-  console.log(openModal)
   const handleOpenModal = () => {
     setOpenModal(true);
   };

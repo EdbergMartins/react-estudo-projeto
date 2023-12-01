@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import Message from '../layout/Message';
-import axios from '../layout/axiosConfig';
+import axios from 'axios';
 import styles from "./Home.module.css";
 
 function Login({ login }) {
@@ -25,7 +25,7 @@ function Login({ login }) {
     setEmailValue(e.target[0].value)
     setPasswordValue(e.target[1].value)
     setLoading(true);
-    axios.post('/login', requestBody)
+    axios.post(`${process.env.REACT_APP_API_URL}/login`, requestBody)
       .then(response => {
         if (response.data === "Dados incorretos, tente novamente.") {
           setMessage(response.data)
@@ -53,7 +53,7 @@ function Login({ login }) {
     setEmailValue(e.target[0].value)
     setPasswordValue(e.target[1].value)
     setLoading(true);
-    axios.post('/register', requestBody)
+    axios.post({ baseURL: process.env.REACT_APP_API_URL })
       .then(response => {
         if (response.data === "Usuário já cadastrado") {
           setMessage(response.data)
@@ -102,22 +102,6 @@ function Login({ login }) {
               Bem-vindo ao <span style={{ borderRadius: '5px' }}>Costs</span>
             </h1>
             <p>Login</p>
-            {/* <Input
-              type="email"
-              name="account"
-              placeholder="Nome do Usuário"
-              handleOnChange={handleChangeEmail}
-              value={emailValue} />
-            <Input
-              type="password"
-              name="account"
-              placeholder="Password"
-              handleOnChange={handleChangePassword}
-              value={passwordValue} />
-            <LoadingButton disabled={disabled} handleClick={handleLogin} loading={loading} text="Entrar" />
-            <span
-              onClick={handleChangeCreateAccount}
-            >Criar Conta</span> */}
             <form onSubmit={(e) => handleLogin(e)}>
               <div className={styles.form_login}>
                 <div>
@@ -154,23 +138,6 @@ function Login({ login }) {
               Bem-vindo ao <span style={{ borderRadius: '5px' }}>Costs</span>
             </h1>
             <p>Crie sua Conta</p>
-            {/* <Input
-              type="email"
-              name="account"
-              placeholder="Nome do Usuário"
-              handleOnChange={handleChangeEmail}
-              value={emailValue} />
-            <Input
-              type="password"
-              name="account"
-              placeholder="Password"
-              handleOnChange={handleChangePassword}
-              value={passwordValue} />
-
-            <LoadingButton handleClick={handleSingUp} loading={loading} text="Criar Conta" />
-            <span
-              onClick={handleChangeCreateAccount}
-            >Ir para login</span> */}
             <form onSubmit={(e) => handleSingUp(e)}>
               <dvi className={styles.form_login}>
                 <div>
