@@ -7,7 +7,7 @@ export const CardProject = (project) => {
 
 
   const [openModal, setOpenModal] = useState(false)
-  console.log(project)
+  console.log(openModal)
   const handleOpenModal = () => {
     setOpenModal(true);
   };
@@ -22,7 +22,7 @@ export const CardProject = (project) => {
   const { name, budget, category } = project.project
   return (
     <>
-      <div onClick={() => setOpenModal(true)} className={styles.cardDiv}>
+      <div onClick={handleOpenModal} className={styles.cardDiv}>
         <h2>{name}</h2>
         <p>Category: {category}</p>
       </div>

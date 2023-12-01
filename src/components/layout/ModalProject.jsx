@@ -36,9 +36,11 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
   const onCloseModifyModal = () => {
     setModifyModal(false)
     setValorChanger('')
+    setValueDescription('')
   }
 
   const handleAdd = (value, description) => {
+    setLoading(true)
     axios.post(`/transaction/${typeOfAdd === "Receita" ? "credit" : "debit"}`, { params: { "idProject": project.project.id, "value": valorChanger, "description": valueDescription } })
       .then(response => {
         console.log(response)
@@ -60,9 +62,12 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
         setType('error')
         setMessage('Erro ao executar a ação.')
       })
-      .finally(() =>
-
+      .finally(() => {
         setLoading(false)
+        setModifyModal(false)
+        setValueDescription('')
+        setValorChanger('')
+      }
       )
   }
 
@@ -70,7 +75,8 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
     const handleOutsideClick = (event) => {
       if (secondModalRef.current && !secondModalRef.current.contains(event.target)) {
         setModifyModal(false)
-        setValorChanger()
+        setValueDescription('')
+        setValorChanger('')
       }
     };
 
@@ -128,7 +134,7 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
       document.removeEventListener('mousedown', handleOutsideClick);
     };
   }, [isOpen, onClose]);
-
+  console.log(isOpen)
 
   return (
     <div>
@@ -163,15 +169,15 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
                   />
 
                 </div>
-                <LoadingButton handleClick={() => handleAdd()} text='Adicionar' />
+                <LoadingButton disabled={!valueDescription || !valorChanger && true} loading={false} handleClick={() => handleAdd()} text='Adicionar' />
               </dvi>
             </form>
           </div>
         </div>
       }
-      <div className={`${style.overlay} ${isOpen ? style.show : ''}`} onClick={onClose}></div>
-      <div className={`${style.darken} ${isOpen ? style.show : ''}`} />
+      <div className={`${style.darken}`} />
       <div ref={modalRef} className={`${style.modal} ${isOpen ? style.show : ''}`}>
+
         <div className={style.modalContent}>
           <div className={style.displayModal}>
             <span className={style.closeBtn} onClick={onClose}>&times;</span>

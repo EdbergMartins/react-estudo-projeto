@@ -26,6 +26,7 @@ function NewProject() {
       })
       .finally(() =>
         setLoading(false)
+
       )
       ;
   }
@@ -35,7 +36,7 @@ function NewProject() {
     <div className={styles.newproject_container}>
       <h1>Criar Projeto</h1>
       <p>Crie seu projeto para depois adicionar os seviços</p>
-      <ProjectForm handleSubmit={createPost} btnText="Criar Projeto" />
+      <ProjectForm  handleSubmit={createPost} btnText="Criar Projeto" />
     </div>
       {message ? <Message type={type} msg={message} /> : <></>}
     </>

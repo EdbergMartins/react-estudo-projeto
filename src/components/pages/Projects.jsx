@@ -5,6 +5,7 @@ import axios from '../layout/axiosConfig'
 import { useSelector } from 'react-redux';
 import { CardProject } from '../layout/CardProject';
 import style from './Projects.module.css'
+import LinkButton from '../layout/LinkButton';
 
 
 function Projects() {
@@ -36,6 +37,10 @@ function Projects() {
 
   return (
     <div className={style.main_container} >
+      <div style={{ position: "relative", top: "65px", left: "60px" }}>
+        <LinkButton to="/newproject" text="Novo Projeto" />
+      </div>
+
       <div className={style.title_container}>
       <h1>Meus Projetos</h1>
       </div>

@@ -5,17 +5,16 @@
   margin: 10px;
   padding: 10px;
   border-radius: 10px;
+    transition: 0.5s;
 }
 
 .cardDiv:hover {
   cursor: pointer;
   background-color: #dab05e;
+  transition: 0.5s;
 }
 
 .cardDiv:active {
-  background-color: rgba(0, 0, 0, 0.2);
-  top: 2px;
-  left: 2px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-  z-index: -1;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    transition: 0.05s;
 }

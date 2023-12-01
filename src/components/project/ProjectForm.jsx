@@ -15,6 +15,7 @@ function ProjectForm({ handleSubmit, btnText, projectData }) {
 
 
   const submit = (e) => {
+    setDisabled(true)
     e.preventDefault();
     const projectWithId = { ...project, idUser: user.id };
     handleSubmit(projectWithId);
