@@ -1,4 +1,4 @@
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes, Redirect } from "react-router-dom";
 import Company from "./components/pages/Company";
 import Contact from "./components/pages/Contact";
 import Home from "./components/pages/Home";
@@ -10,9 +10,10 @@ import Container from "./components/layout/Container";
 import Footer from "./components/layout/Footer";
 import Navbar from "./components/layout/Navbar";
 import Login from './components/pages/LogIn';
+import { ContactForm } from './components/layout/ContactForm';
 
 function App({ token }) {
-
+  const NotFound = () => <div>Página não encontrada</div>
 
 
   return (
@@ -25,13 +26,13 @@ function App({ token }) {
               <>
                 <Route exact path="/" element={<Home />} />
                 <Route exact path="/home" element={<Home />} />
-                <Route exact path="/company" element={<Company />} />
-                <Route exact path="/contact" element={<Contact />} />
                 <Route exact path="/newproject" element={<NewProject />} />
                 <Route exact path="/project" element={<Projects />} />
               </>
               :
+              <>
               <Route exact path="/*" element={<Login />} />
+              </>
             }
           </Routes>
         </Container>

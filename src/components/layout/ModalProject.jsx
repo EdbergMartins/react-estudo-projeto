@@ -7,6 +7,7 @@ import axios from 'axios'
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import { useSelector } from 'react-redux';
+import Message from './Message';
 
 export const ModalProject = ({ project, isOpen, onClose }) => {
   const modalRef = useRef(null);
@@ -44,8 +45,8 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
   const handleAdd = (value, description) => {
     setLoading(true)
     axios.post(`${process.env.REACT_APP_API_URL}/transaction/${typeOfAdd === "Receita" ? "credit" : "debit"}`,
+      { "idProject": project.project.id, "value": valorChanger, "description": valueDescription },
       {
-        params: { "idProject": project.project.id, "value": valorChanger, "description": valueDescription },
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `${token}`,
@@ -56,11 +57,15 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
           const value = credits[credits.length - 1]
           const responseValue = parseFloat(response.data[0].value)
           credits[credits.length - 1] = value + responseValue
+          setType('sucess')
+          setMessage("Receita adiconada com sucesso")
         } else {
           debits.unshift(response.data[0])
           const value = debits[debits.length - 1]
           const responseValue = parseFloat(response.data[0].value)
           debits[debits.length - 1] = value + responseValue
+          setType('sucess')
+          setMessage("Gasto adiconado com sucesso")
         }
         setTotalBudget(credits[credits.length - 1] - debits[debits.length - 1])
       })
@@ -152,7 +157,9 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
   return (
     <div>
       {modifyModal &&
-        <div style={{ zIndex: 1 }} className={style.darken}>
+        <>
+          <Message type={type} msg={message} />
+          <div style={{ zIndex: 1 }} className={style.darken}>
           <div ref={secondModalRef} className={style.modalSecondary}>
             <span className={style.closeBtn} onClick={() => onCloseModifyModal()}>&times;</span>
             <h4> Adicionar {typeOfAdd} </h4>
@@ -187,10 +194,12 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
             </form>
           </div>
         </div>
+      </>
       }
-      <div className={`${style.darken}`} />
+      <div className={`${style.darken}`} >
+        <Message type={type} msg={message} />
+      </div>
       <div ref={modalRef} className={`${style.modal} ${isOpen ? style.show : ''}`}>
-
         <div className={style.modalContent}>
           <div className={style.displayModal}>
             <span className={style.closeBtn} onClick={onClose}>&times;</span>

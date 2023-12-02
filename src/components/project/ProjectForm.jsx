@@ -9,10 +9,8 @@ import { useDispatch, useSelector } from 'react-redux';
 function ProjectForm({ handleSubmit, btnText, projectData }) {
   const [project, setProject] = useState(projectData || {});
   const [disabled, setDisabled] = useState(false)
-
   const dispatch = useDispatch()
   const user = useSelector((state: RootState) => state);
-
 
   const submit = (e) => {
     setDisabled(true)

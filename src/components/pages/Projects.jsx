@@ -34,6 +34,7 @@ function Projects({ logout, token }) {
         console.error('Erro na solicitação:', error.response.status);
         setType('error')
         setMessage('Erro na verificação do usuário, fala o login novamente.')
+        logout()
       })
       .finally(() =>
         setLoading(false)
@@ -44,10 +45,9 @@ function Projects({ logout, token }) {
   return (
     <div className={style.main_container} >
       <Message type={type} msg={message} />
-      <div style={{ position: "relative", top: "65px", left: "60px" }}>
+      <div style={{ marginTop: '10px', placeContent: 'center', display: 'flex' }}>
         <LinkButton to="/newproject" text="Novo Projeto" />
       </div>
-
       <div className={style.title_container}>
       <h1>Meus Projetos</h1>
       </div>
@@ -62,10 +62,10 @@ function Projects({ logout, token }) {
 
 const mapDispatchToProps = dispatch => ({
   logout: () => dispatch({
-    type: '',
+    type: 'LOGOUT',
     token: '',
     email: '',
-    id: ''
+    id: '' 
   }),
 });
 

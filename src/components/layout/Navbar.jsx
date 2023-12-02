@@ -4,9 +4,10 @@ import Container from "./Container";
 
 import logo from "../../img/costs_logo.png";
 import styles from "./Navbar.module.css";
-import { useSelector } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
+import LoadingButton from './LoadingButton';
 
-function Navbar() {
+function Navbar({ logout }) {
   const token = useSelector((state: RootState) => state.token);
   return (
 
@@ -26,13 +27,13 @@ function Navbar() {
             {" "}
             <Link to="/project">Projetos</Link>
           </li>
-          <li className={styles.item}>
+            {/* <li className={styles.item}>
             {" "}
-            <Link to="/company">Empresa</Link>
-          </li>
-          <li className={styles.item}>
+              <Link to="/contact">Contato</Link>
+            </li> */}
+            <li className={styles.item}>
             {" "}
-            <Link to="/contact">Contato</Link>
+              <span onClick={logout} style={{ color: 'white', cursor: 'pointer' }}>Sair</span>
           </li>
         </ul>
           :
@@ -42,4 +43,14 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+
+const mapDispatchToProps = dispatch => ({
+  logout: () => dispatch({
+    type: 'LOGOUT',
+    token: '',
+    email: '',
+    id: ''
+  }),
+});
+
+export default connect(null, mapDispatchToProps)(Navbar);

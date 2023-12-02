@@ -139,7 +139,7 @@ function Login({ login }) {
             </h1>
             <p>Crie sua Conta</p>
             <form onSubmit={(e) => handleSingUp(e)}>
-              <dvi className={styles.form_login}>
+              <dvi style={styles.form_login}>
                 <div>
                   <input
                     onChange={handleChangeEmail}
