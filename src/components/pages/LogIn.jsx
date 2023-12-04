@@ -12,7 +12,7 @@ function Login({ login }) {
   const [requestBody, setRequestBody] = useState()
   const [message, setMessage] = useState('')
   const [type, setType] = useState('')
-  const [disabled, setDisabled] = useState(true)
+  const [disabled, setDisabled] = useState(false)
 
 
   useEffect(() => {
@@ -22,6 +22,7 @@ function Login({ login }) {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setDisabled(true)
     setEmailValue(e.target[0].value)
     setPasswordValue(e.target[1].value)
     setLoading(true);
@@ -43,7 +44,10 @@ function Login({ login }) {
         setMessage('Erro ao realiar login verifique as credenciais.')
       })
       .finally(() =>
+      {
         setLoading(false)
+        setDisabled(false)
+      }
       )
       ;
   }
@@ -122,7 +126,7 @@ function Login({ login }) {
                   <input onChange={handleChangePassword} value={passwordValue} placeholder='Senha' type="password" id="password" name="password" required />
                 </div>
 
-                <button type="submit">Entrar</button>
+                <button disabled={disabled} type="submit">Entrar</button>
 
                 <span style={{ textAlign: 'center' }}
                   onClick={handleChangeCreateAccount}

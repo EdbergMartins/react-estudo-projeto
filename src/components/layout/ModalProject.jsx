@@ -123,6 +123,10 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
         console.error('Erro na solicitação:', error);
         setType('error')
         setMessage('Erro ao executar a ação.')
+        if (error.response.status === 401) {
+          localStorage.clear();
+        }
+
       })
       .finally(() =>
 
@@ -235,7 +239,7 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
                           <TableCell align="center" component="th" scope="row">
                             {row.value}
                           </TableCell>
-                          <TableCell align="center" component="th" scope="row">
+                          <TableCell style={{ maxWidth: "50px", overflowWrap: "break-word" }} align="center" component="th" scope="row">
                             {row.description}
                           </TableCell>
                           <TableCell align="center">
@@ -277,7 +281,11 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
                   </Table>
                 </TableContainer>
                 :
-                "Nenhum dado informado"
+                <>
+                  <h2 style={{ textAlign: "center", marginTop: '40px' }}>
+                    Nenhum dado informado
+                  </h2>
+                </>
             }
           </div>
         </div>
