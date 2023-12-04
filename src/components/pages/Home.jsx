@@ -10,7 +10,7 @@ function Home() {
       </h1>
       <p>Comece a gerenciar seus projetos agora mesmo!</p>
       <LinkButton to="/newproject" text="Novo Projeto" />
-      <img style={{ width: '100%' }} src={savings} alt="Costs" />
+      <img style={{ maxWidth: '480px', width: '100%' }} src={savings} alt="Costs" />
     </section>
   );
 }
