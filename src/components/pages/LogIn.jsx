@@ -57,15 +57,19 @@ function Login({ login }) {
     setEmailValue(e.target[0].value)
     setPasswordValue(e.target[1].value)
     setLoading(true);
-    axios.post({ baseURL: "https://app-40ea08d9-73df-4f70-b867-86e0b22eac4d.cleverapps.io" })
+    axios.post("https://app-40ea08d9-73df-4f70-b867-86e0b22eac4d.cleverapps.io/register", requestBody)
       .then(response => {
         if (response.data === "Usuário já cadastrado") {
           setMessage(response.data)
           setMessage('Usuário já cadastrado.')
           setType('error')
+          setEmailValue('')
+          setPasswordValue('')
         } else {
           setMessage('Usuário registrado com sucesso.')
           setType('sucess')
+          setEmailValue('')
+          setPasswordValue('')
           return
         }
       })
@@ -73,6 +77,8 @@ function Login({ login }) {
         console.error('Erro na solicitação:', error);
         setType('error')
         setMessage('Erro ao realizar cadastro.')
+        setEmailValue('')
+        setPasswordValue('')
       })
       .finally(() =>
         setLoading(false)
@@ -163,7 +169,7 @@ function Login({ login }) {
                   <input onChange={handleChangePassword} value={passwordValue} placeholder='Senha' type="password" id="password" name="password" required />
                 </div>
 
-                <button disabled={disabled} type="submit">Entrar</button>
+                <button disabled={disabled} type="submit">Criar Conta</button>
 
                 <span style={{ textAlign: 'center' }}
                   onClick={handleChangeCreateAccount}

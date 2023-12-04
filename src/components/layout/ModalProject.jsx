@@ -24,7 +24,7 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
   const [totalBudget, setTotalBudget] = useState(0)
   const [type, setType] = useState('')
   const [message, setMessage] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const token = useSelector((state: RootState) => state.token);
 
   const handleClick = (type) => {
@@ -203,7 +203,10 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
       <div className={`${style.darken}`} >
         <Message type={type} msg={message} />
       </div>
-      <div ref={modalRef} className={`${style.modal} ${isOpen ? style.show : ''}`}>
+      {loading ?
+        <div className={style.ldsHourglass}></div>
+        :
+        <div ref={modalRef} className={`${style.modal} ${isOpen ? style.show : ''}`}>
         <div className={style.modalContent}>
           <div className={style.displayModal}>
             <span className={style.closeBtn} onClick={onClose}>&times;</span>
@@ -282,14 +285,14 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
                 </TableContainer>
                 :
                 <>
-                  <h2 style={{ textAlign: "center", marginTop: '40px' }}>
-                    Nenhum dado informado
-                  </h2>
+                    <div style={{ textAlign: "center", marginTop: '40px' }}>
+                      <div className={style.ldsHourglass}></div>
+                    </div>
                 </>
             }
           </div>
         </div>
-      </div>
+        </div>}
     </div >
   );
 };

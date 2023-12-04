@@ -13,7 +13,7 @@ function Projects({ logout, token }) {
   const user = useSelector((state: RootState) => state);
   const [message, setMessage] = useState('')
   const [type, setType] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [projects, setProjects] = useState()
 
 
@@ -51,11 +51,18 @@ function Projects({ logout, token }) {
       <div className={style.title_container}>
       <h1>Meus Projetos</h1>
       </div>
-      <div className={style.card_container}>
+      {loading ?
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div className={style.ldsHourglass}></div>
+        </div>
+        :
+        <div className={style.card_container}>
       {projects && projects.map((project) =>
         <CardProject project={project} />
       )}
     </div>
+      }
+
     </div>
   );
 }
