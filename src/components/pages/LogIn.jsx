@@ -93,6 +93,7 @@ function Login({ login }) {
     setPasswordValue('')
     setEmailValue('')
 
+
   }
 
   return (
@@ -143,7 +144,7 @@ function Login({ login }) {
             </h1>
             <p>Crie sua Conta</p>
             <form onSubmit={(e) => handleSingUp(e)}>
-              <dvi style={styles.form_login}>
+              <div className={styles.form_login}>
                 <div>
                   <input
                     onChange={handleChangeEmail}
@@ -151,25 +152,25 @@ function Login({ login }) {
                     type="text"
                     id="username"
                     name="username"
-                    value={emailValue}
                     pattern="[^@\s]+@[^@\s]+"
+                    value={emailValue}
                     title="Por favor, insira um endereço de e-mail válido."
                     required
                   />
 
                 </div>
                 <div>
-                  <input onChange={handleChangePassword} value={passwordValue} pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" title="Minimo oito caracteres, pelo menos uma letra e um numero" placeholder='Senha' type="password" id="password" name="password" required />
+                  <input onChange={handleChangePassword} value={passwordValue} placeholder='Senha' type="password" id="password" name="password" required />
                 </div>
 
-                <button type="submit">Criar</button>
+                <button disabled={disabled} type="submit">Entrar</button>
 
                 <span style={{ textAlign: 'center' }}
                   onClick={handleChangeCreateAccount}
                 >
-                  Entrar em uma conta
+                  Login
                 </span>
-              </dvi>
+              </div>
             </form>
           </section >
       }
