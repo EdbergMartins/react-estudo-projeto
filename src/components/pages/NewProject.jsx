@@ -16,7 +16,7 @@ function NewProject() {
 
   function createPost(project) {
 
-    axios.post(`${process.env.REACT_APP_API_URL}/project`,
+    axios.post(`https://app-40ea08d9-73df-4f70-b867-86e0b22eac4d.cleverapps.io/project`,
       project,
       {
         headers: token ? {

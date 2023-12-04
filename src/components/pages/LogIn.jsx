@@ -26,7 +26,7 @@ function Login({ login }) {
     setEmailValue(e.target[0].value)
     setPasswordValue(e.target[1].value)
     setLoading(true);
-    axios.post(`${process.env.REACT_APP_API_URL}/login`, requestBody)
+    axios.post(`https://app-40ea08d9-73df-4f70-b867-86e0b22eac4d.cleverapps.io/login`, requestBody)
       .then(response => {
         if (response.data === "Dados incorretos, tente novamente.") {
           setMessage(response.data)
@@ -57,7 +57,7 @@ function Login({ login }) {
     setEmailValue(e.target[0].value)
     setPasswordValue(e.target[1].value)
     setLoading(true);
-    axios.post({ baseURL: process.env.REACT_APP_API_URL })
+    axios.post({ baseURL: "https://app-40ea08d9-73df-4f70-b867-86e0b22eac4d.cleverapps.io" })
       .then(response => {
         if (response.data === "Usuário já cadastrado") {
           setMessage(response.data)

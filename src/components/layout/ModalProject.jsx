@@ -44,7 +44,7 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
 
   const handleAdd = (value, description) => {
     setLoading(true)
-    axios.post(`${process.env.REACT_APP_API_URL}/transaction/${typeOfAdd === "Receita" ? "credit" : "debit"}`,
+    axios.post(`https://app-40ea08d9-73df-4f70-b867-86e0b22eac4d.cleverapps.io/transaction/${typeOfAdd === "Receita" ? "credit" : "debit"}`,
       { "idProject": project.project.id, "value": valorChanger, "description": valueDescription },
       {
         headers: {
@@ -103,7 +103,7 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
 
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_URL}/transactions`,
+    axios.get(`https://app-40ea08d9-73df-4f70-b867-86e0b22eac4d.cleverapps.io/transactions`,
       {
         params: { "id": project.project.id },
         headers: {
