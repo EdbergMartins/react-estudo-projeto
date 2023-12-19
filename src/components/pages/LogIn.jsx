@@ -37,7 +37,7 @@ function Login({ login }) {
         setType('sucess')
         delete response.data.password
         login(response.data.token, response.data.email, response.data.id); 
-        // window.location.href = '/home'
+        window.location.href = '/home'
       })
       .catch(error => {
         console.error('Erro na solicitação:', error);
