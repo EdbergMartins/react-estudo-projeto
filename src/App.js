@@ -26,6 +26,7 @@ function App({ token }) {
               <>
                 <Route exact path="/" element={<Home />} />
                 <Route exact path="/home" element={<Home />} />
+                <Route exact path="/react-estudo-projeto/" element={<Home />} />
                 <Route exact path="/newproject" element={<NewProject />} />
                 <Route exact path="/project" element={<Projects />} />
               </>
