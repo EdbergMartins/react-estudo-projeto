@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Message from '../layout/Message';
 import axios from 'axios';
 import styles from "./Home.module.css";
+import LinkButton from '../layout/LinkButton';
 
 function Login({ login }) {
   const [emailValue, setEmailValue] = useState('')
@@ -21,10 +22,10 @@ function Login({ login }) {
 
 
   const handleLogin = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     setDisabled(true)
-    setEmailValue(e.target[0].value)
-    setPasswordValue(e.target[1].value)
+    // setEmailValue(e.target[0].value)
+    // setPasswordValue(e.target[1].value)
     setLoading(true);
     axios.post(`https://app-40ea08d9-73df-4f70-b867-86e0b22eac4d.cleverapps.io/login`, requestBody)
       .then(response => {
@@ -37,7 +38,7 @@ function Login({ login }) {
         setType('sucess')
         delete response.data.password
         login(response.data.token, response.data.email, response.data.id); 
-        // window.location.href = '/home'
+        window.location.href = '/home'
       })
       .catch(error => {
         console.error('Erro na solicitação:', error);
@@ -99,9 +100,9 @@ function Login({ login }) {
     setLoginViwer(!loginViwer)
     setPasswordValue('')
     setEmailValue('')
-
-
   }
+
+
 
   return (
     <>
@@ -134,7 +135,7 @@ function Login({ login }) {
                   <input onChange={handleChangePassword} value={passwordValue} placeholder='Senha' type="password" id="password" name="password" required />
                 </div>
 
-                <button disabled={disabled} type="submit">Entrar</button>
+                <LinkButton onClick={handleLogin} to='/home' text='Entrar' disabled={disabled} type="submit" />
 
                 <span style={{ textAlign: 'center' }}
                   onClick={handleChangeCreateAccount}

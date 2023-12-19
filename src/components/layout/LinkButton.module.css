@@ -5,6 +5,7 @@
   text-decoration: none;
   transition: 0.5s;
   border-radius: 5px;
+  text-align: center;
 }
 
 .btn:hover {
