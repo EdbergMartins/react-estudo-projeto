@@ -27,7 +27,7 @@ function Login({ login }) {
     // setEmailValue(e.target[0].value)
     // setPasswordValue(e.target[1].value)
     setLoading(true);
-    axios.post(`https://app-40ea08d9-73df-4f70-b867-86e0b22eac4d.cleverapps.io/login`, requestBody)
+    axios.post(`https://coasts-api.onrender.com/login`, requestBody)
       .then(response => {
         if (response.data === "Dados incorretos, tente novamente.") {
           setMessage(response.data)
@@ -59,7 +59,7 @@ function Login({ login }) {
     setEmailValue(e.target[0].value)
     setPasswordValue(e.target[1].value)
     setLoading(true);
-    axios.post("https://app-40ea08d9-73df-4f70-b867-86e0b22eac4d.cleverapps.io/register", requestBody)
+    axios.post("https://coasts-api.onrender.com/register", requestBody)
       .then(response => {
         if (response.data === "Usuário já cadastrado") {
           setMessage(response.data)

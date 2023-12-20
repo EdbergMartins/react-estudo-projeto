@@ -25,6 +25,7 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
   const [type, setType] = useState('')
   const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(true)
+  const [disabled, setDisabled] = useState(false)
   const token = useSelector((state: RootState) => state.token);
 
   const handleClick = (type) => {
@@ -43,8 +44,8 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
   }
 
   const handleAdd = (value, description) => {
-    setLoading(true)
-    axios.post(`https://app-40ea08d9-73df-4f70-b867-86e0b22eac4d.cleverapps.io/transaction/${typeOfAdd === "Receita" ? "credit" : "debit"}`,
+    setDisabled(true)
+    axios.post(`https://coasts-api.onrender.com/transaction/${typeOfAdd === "Receita" ? "credit" : "debit"}`,
       { "idProject": project.project.id, "value": valorChanger, "description": valueDescription },
       {
         headers: {
@@ -103,7 +104,7 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
 
 
   useEffect(() => {
-    axios.get(`https://app-40ea08d9-73df-4f70-b867-86e0b22eac4d.cleverapps.io/transactions`,
+    axios.get(`https://coasts-api.onrender.com/transactions`,
       {
         params: { "id": project.project.id },
         headers: {
@@ -193,7 +194,7 @@ export const ModalProject = ({ project, isOpen, onClose }) => {
                   />
 
                 </div>
-                <LoadingButton disabled={!valueDescription || !valorChanger && true} loading={false} handleClick={() => handleAdd()} text='Adicionar' />
+                <LoadingButton disabled={disabled || !valueDescription || !valorChanger && true} loading={loading} handleClick={() => handleAdd()} text='Adicionar' />
               </dvi>
             </form>
           </div>

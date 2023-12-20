@@ -21,7 +21,7 @@ function Projects({ logout, token }) {
 
   const idUser = user.id
   useEffect(() => {
-    axios.get(`https://app-40ea08d9-73df-4f70-b867-86e0b22eac4d.cleverapps.io/project`, {
+    axios.get(`https://coasts-api.onrender.com/project`, {
       params: { idUser },
       headers: {
         'Content-Type': 'application/json',
