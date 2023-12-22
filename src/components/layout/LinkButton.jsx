@@ -1,11 +1,20 @@
 import { Link } from "react-router-dom";
 import styles from "./LinkButton.module.css";
 
-function LinkButton({ to, text, onClick }) {
+function LinkButton({ to, text, onClick, disabled }) {
   return (
-    <Link onClick={onClick} className={styles.btn} to={to}>
-      {text}
-    </Link>
+    <>
+      {disabled ?
+        <button style={{ padding: '0' }}>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div className={styles.ldsHourglass}></div>
+          </div> </button >
+        :
+        <Link onClick={onClick} className={styles.btn} to={to}>
+          {text}
+        </Link>
+      }
+    </>
   );
 }
 
