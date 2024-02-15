@@ -54,10 +54,8 @@
   color: #fff;
   padding: 0.5em 1em;
   text-decoration: none;
-  transition: 0.5s;
   border-radius: 5px;
   text-align: center;
-    font-size: 15px;
 }
 
 .form_login button:hover {
