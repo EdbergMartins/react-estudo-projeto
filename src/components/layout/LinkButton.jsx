@@ -7,8 +7,10 @@ function LinkButton({ to, text, onClick, disabled }) {
       {disabled ?
         <button style={{ padding: '0' }}>
           <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <div className={styles.ldsHourglass}></div>
-          </div> </button >
+            <div className={styles.ldsHourglass}>
+            </div>
+          </div>
+        </button >
         :
         <Link onClick={onClick} className={styles.btn} to={to}>
           {text}

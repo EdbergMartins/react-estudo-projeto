@@ -4,6 +4,7 @@ import Message from '../layout/Message';
 import axios from 'axios';
 import styles from "./Home.module.css";
 import LinkButton from '../layout/LinkButton';
+import linkStyle from '../layout/LinkButton.module.css'
 
 function Login({ login }) {
   const [emailValue, setEmailValue] = useState('')
@@ -58,7 +59,8 @@ function Login({ login }) {
     e.preventDefault(e);
     setEmailValue(e.target[0].value)
     setPasswordValue(e.target[1].value)
-    setLoading(true);
+    setDisabled(true)
+    setLoading(true)
     axios.post("https://coasts-api.onrender.com/register", requestBody)
       .then(response => {
         if (response.data === "Usuário já cadastrado") {
@@ -83,7 +85,10 @@ function Login({ login }) {
         setPasswordValue('')
       })
       .finally(() =>
+      {
+        setDisabled(false)
         setLoading(false)
+      }
       )
       ;
   }
@@ -171,8 +176,15 @@ function Login({ login }) {
                   <input onChange={handleChangePassword} value={passwordValue} placeholder='Senha' type="password" id="password" name="password" required />
                 </div>
 
-                <button disabled={disabled} type="submit">Criar Conta</button>
-
+                {!loading ?
+                  <button disabled={disabled} type="submit">Criar Conta</button>
+                  :
+                  <button style={{ padding: '0' }}>
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                      <div className={linkStyle.ldsHourglass}></div>
+                    </div>
+                  </button >
+                }
                 <span style={{ textAlign: 'center' }}
                   onClick={handleChangeCreateAccount}
                 >

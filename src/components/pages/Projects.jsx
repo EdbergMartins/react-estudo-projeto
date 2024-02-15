@@ -57,9 +57,13 @@ function Projects({ logout, token }) {
         </div>
         :
         <div className={style.card_container}>
-      {projects && projects.map((project) =>
+          {projects[0] ? projects.map((project) =>
         <CardProject project={project} />
-      )}
+          ) :
+            <p>
+              Nenhum projeto cadastrado
+            </p>
+          }
     </div>
       }
 
